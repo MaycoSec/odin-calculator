@@ -1,0 +1,38 @@
+.calc-container {
+    margin: auto;
+    display: flex;
+    background-color: #010101;
+    width: 250px;
+    height: 400px;
+}
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+.operand, .operator {
+    display: flex;
+    align-items: center;
+    flex:1 0 1;
+    justify-content: center;
+    width: 47px;
+    height: 50px;
+    background-color: #171717;
+    border-radius: 50%;
+}
+
+.operator {
+    color: #80D14E;
+}
+
+.operand {
+    color: #F8F8F8;
+}
+
+.equals {
+    background-color: #0A1A04;
+}
