@@ -1,5 +1,6 @@
 .calc-container {
     margin: auto;
+    margin-top: 75px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -9,6 +10,8 @@
 }
 
 .display {
+    padding-right: 25px;
+    padding-bottom: 16px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
