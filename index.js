@@ -6,7 +6,7 @@ function subtract(num1, num2) {
     return num1 - num2;
 }
 
-function multiply(num1,num2) {
+function multiply(num1, num2) {
     return num1 * num2;
 }
 
@@ -27,23 +27,33 @@ const clear = document.querySelector("#clear");
 
 let firstNum = "";
 let operator = null;
+let oldOperatorQuery = null;
 let secondNum = "";
 let result = null;
 
-
-// 55 + 55 =
-//    STOP VAR1 
 operators.forEach((op) => {
     op.addEventListener("click", (event) => {
-         // If operator already exists, we must operate
-         if (operator !== null) {
+        // If operator already exists, we must operate
+        if (operator !== null && secondNum !== "") {
+            // Remove styles from first operator
+            oldOperatorQuery.style.backgroundColor = "#171717"
+            oldOperatorQuery.style.opacity = "1.0"
             result = operate(firstNum, operator, secondNum);
             populateDisplay(result);
-            operator = event.target.innerText;
         }
-
-        operator = event.target.innerText;
-
+        // first operator, lets make sure the user knows it
+        else if (operator === null && firstNum !== "") {
+            // First operator being an equal?
+            if (event.target.innerText !== "=") {
+                operator = event.target.innerText;
+                console.log(event.target.id)
+                let tempBtn = document.querySelector("#" + event.target.id);
+                tempBtn.style.backgroundColor = "gray"
+                tempBtn.style.opacity = "0.9";
+                // Just so we can remove the styles when the time comes.
+                oldOperatorQuery = tempBtn;
+            }
+        }
     })
 })
 
@@ -51,16 +61,30 @@ operands.forEach((operand) => {
     operand.addEventListener("click", (event) => {
         if (operator === null) {
             firstNum += event.target.innerText;
-    }
+            populateDisplay(firstNum);
+            console.log(firstNum);
+        }
         else {
             secondNum += event.target.innerText;
+            console.log(secondNum);
+            populateDisplay(secondNum);
+            console.log(`firstnum from else: ${firstNum}`);
+            if (firstNum === null) {
+                firstNum = result;
+            }
         }
 
     })
 })
 
-clear.addEventListener("click", ()  => {
+// Clears display and variables 
+clear.addEventListener("click", () => {
     display.textContent = "0";
+    firstNum = "";
+    operator = null;
+    oldOperatorQuery = null;
+    secondNum = "";
+    result = null;
 })
 
 function operate(num1, op, num2) {
@@ -82,11 +106,15 @@ function operate(num1, op, num2) {
             calc = divide(num1, num2);
             break;
     }
+    // Round decimal numbers, if any
+    if (!Number.isInteger(calc)) {
+        calc = calc.toFixed(2);
+    }
     // Clear old global variables
-    firstNum = "";
+    firstNum = null;
     secondNum = "";
     operator = null;
-    console.log(calc);
+    result = calc;
     return calc;
 
 }

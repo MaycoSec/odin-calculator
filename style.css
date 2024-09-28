@@ -1,3 +1,7 @@
+body {
+    background-image: linear-gradient(to left, rgb(97, 96, 96), rgba(10, 10, 10, 0.87));
+}
+
 .calc-container {
     margin: auto;
     margin-top: 75px;
